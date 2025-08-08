@@ -1,6 +1,10 @@
 // src/pages/Vendors/AddVendorLocal.jsx
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import axios from 'axios';
+import {toast, Toaster} from 'react-hot-toast';
+const API_URL = import.meta.env.VITE_API_ENDPOINT;
+
 
 const AddVendorLocal = ({ onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -25,6 +29,17 @@ const AddVendorLocal = ({ onClose, onSubmit }) => {
     undertakingSignature: null,
     undertakingDate: ''
   });
+
+
+  const handleUploadForm = async () => {
+     try {
+       const res = await axios
+
+     } catch (err) {
+      console.error('Error uploading vendor data:', err);
+      alert('Failed to upload vendor data. Please try again.');
+     }
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
