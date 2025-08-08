@@ -6,54 +6,37 @@ import {
   UserCheck, 
   ShoppingCart 
 } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = ({ activeItem = 'Vendor', onMenuClick }) => {
+const Sidebar = () => {
+  const location = useLocation();
+
   const menuItems = [
-    { 
-      id: 'Dashboard', 
-      label: 'Dashboard', 
-      icon: LayoutDashboard 
-    },
-    { 
-      id: 'Vendor', 
-      label: 'Vendor', 
-      icon: Truck 
-    },
-    { 
-      id: 'Customer', 
-      label: 'Customer', 
-      icon: Users 
-    },
-    { 
-      id: 'Employee', 
-      label: 'Employee', 
-      icon: UserCheck 
-    },
-    { 
-      id: 'Purchase', 
-      label: 'Purchase', 
-      icon: ShoppingCart 
-    }
+    { id: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { id: '/vendor', label: 'Vendor', icon: Truck },
+    { id: '/customer', label: 'Customer', icon: Users },
+    { id: '/employee', label: 'Employee', icon: UserCheck },
+    { id: '/purchase', label: 'Purchase', icon: ShoppingCart }
   ];
 
   return (
-    <div className="w-64 bg-white h-screen shadow-sm border-r border-gray-200">
+    <div className="w-64 bg-white h-screen shadow-sm border-r border-gray-200 flex flex-col">
       {/* Header */}
       <div className="p-6 border-b border-gray-200">
         <h1 className="text-lg font-semibold text-gray-800">Accounts IMS</h1>
       </div>
 
       {/* Menu Items */}
-      <nav className="mt-6">
+      <nav className="mt-6 flex-1">
         <ul className="space-y-1 px-4">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeItem === item.id;
-            
+            const isActive = location.pathname === item.id;
+
             return (
               <li key={item.id}>
-                <button
-                  onClick={() => onMenuClick?.(item.id)}
+                <Link
+                  to={item.id}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left ${
                     isActive
                       ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
@@ -65,7 +48,7 @@ const Sidebar = ({ activeItem = 'Vendor', onMenuClick }) => {
                     className={isActive ? 'text-blue-700' : 'text-gray-500'} 
                   />
                   <span className="font-medium">{item.label}</span>
-                </button>
+                </Link>
               </li>
             );
           })}
