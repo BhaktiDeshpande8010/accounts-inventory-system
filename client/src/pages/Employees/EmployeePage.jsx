@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Eye } from 'lucide-react';
+import EmployeeForm from './EmployeeForm';
 
 const EmployeePage = () => {
-  // Sample employee data
+  const [showForm, setShowForm] = useState(false);
+
   const employees = [
     { id: 'EMP001', name: 'John Smith', role: 'Manager', department: 'Accounts', contact: '+91 9876543210', status: 'Active' },
     { id: 'EMP002', name: 'Sarah Johnson', role: 'Accountant', department: 'Accounts', contact: '+91 8765432109', status: 'Active' },
@@ -11,18 +13,20 @@ const EmployeePage = () => {
     { id: 'EMP005', name: 'Robert Brown', role: 'Accountant', department: 'Purchase', contact: '+91 5432109876', status: 'Resigned' }
   ];
 
-  const getStatusColor = (status) => {
-    return status === 'Active'
+  const getStatusColor = (status) =>
+    status === 'Active'
       ? 'bg-green-100 text-green-800'
       : 'bg-red-100 text-red-800';
-  };
 
   return (
     <div className="p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Employees</h1>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        <button
+          onClick={() => setShowForm(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
           + Add Employee
         </button>
       </div>
@@ -80,6 +84,21 @@ const EmployeePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal for Add Employee */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-[600px] p-6 relative">
+            <button
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              onClick={() => setShowForm(false)}
+            >
+              ✕
+            </button>
+            <EmployeeForm onClose={() => setShowForm(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
